@@ -15,6 +15,24 @@ class Landing extends React.Component {
     }
   }
 
+  render() {
+    let stepHtml = '';
+    // Look at what step I am on and set the HTML to match it
+    if (this.state.step === 'name') {
+      stepHtml = this.nameHtml();
+    } else if (this.state.step === 'geolocation') {
+      stepHtml = this.geolocationHtml();
+    } else if (this.state.step === 'media') {
+      stepHtml = this.mediaHtml();
+    }
+
+    return(
+      <div className='container'>
+        { stepHtml }
+      </div>
+    )
+  }
+
   // Event: Set state to the value of the input
   submitName(e) {
     e.preventDefault();
@@ -90,30 +108,20 @@ class Landing extends React.Component {
     let context = canvas.getContext('2d');
     // Draw video img into canvas
     context.drawImage(this.videoElement, 0, 0, canvas.width, canvas.height);
-    // Convert canvas to img
-    this.setState( {step: 'review', image: canvas.toDataURL('image/png')} );
     // Stop video
     this.stream.getVideoTracks()[0].stop();
+
+    const player = {
+      name: this.state.name,
+      location: this.state.location,
+      image: canvas.toDataURL('image/png')
+    };
+    this.savePlayer(player);
+    this.context.router.transitionTo('/game');
   }
 
-  render() {
-    let stepHtml = '';
-    // Look at what step I am on and set the HTML to match it
-    if (this.state.step === 'name') {
-      stepHtml = this.nameHtml();
-    } else if (this.state.step === 'geolocation') {
-      stepHtml = this.geolocationHtml();
-    } else if (this.state.step === 'media') {
-      stepHtml = this.mediaHtml();
-    } else if (this.state.step === 'review'){
-      stepHtml = this.reviewHtml();
-    }
-
-    return(
-      <div className='container'>
-        { stepHtml }
-      </div>
-    )
+  savePlayer(player) {
+    localStorage.player = JSON.stringify(player);
   }
 
   // Contains input & button for initial step
@@ -152,17 +160,10 @@ class Landing extends React.Component {
       </div>
     )
   }
+}
 
-  // Show all info collected so far
-  reviewHtml() {
-    return(
-      <div>
-        <p>{this.state.name}</p>
-        <p>{this.state.location}</p>
-        <img src={this.state.image} alt="your pic"/>
-      </div>
-    )
-  }
+Landing.contextTypes = {
+  router: React.PropTypes.object
 }
 
 export default Landing;

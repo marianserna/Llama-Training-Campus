@@ -6,15 +6,15 @@ import { BrowserRouter, Match, Miss } from 'react-router';
 import './css/style.css';
 
 import Landing from './components/Landing';
+import Game from './components/Game';
 import NotFound from './components/NotFound';
 
 const Root = () => {
   return(
     <BrowserRouter>
       <div>
-        { /* This is root route in Rails: What do I show in home page*/}
         <Match exactly pattern="/" component={Landing} />
-          { /* <Match exactly pattern="/store/:storeId" component={App} /> */}
+        <Match exactly pattern="/game" component={Game} />
         <Miss component={NotFound} />
       </div>
     </BrowserRouter>
