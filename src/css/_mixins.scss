@@ -1,0 +1,16 @@
+@mixin button-style {
+  display: block;
+  margin: 0 auto;
+  min-width: 180px;
+  padding: 10px 20px;
+  font-size: $regular-font-size * 2;
+  color: $button-font-color;
+  background: $button-background-color;
+  border: 2px solid $button-border-color;
+  border-radius: 50px;
+  text-decoration: none;
+
+  &:hover {
+    background: $button-hover-background;
+  }
+}

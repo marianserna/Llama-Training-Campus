@@ -4,8 +4,8 @@ import { render } from 'react-dom';
 import { BrowserRouter, Match, Miss } from 'react-router';
 
 import './css/style.css';
-
 import Landing from './components/Landing';
+import Registration from './components/Registration';
 import Game from './components/Game';
 import NotFound from './components/NotFound';
 
@@ -14,6 +14,7 @@ const Root = () => {
     <BrowserRouter>
       <div>
         <Match exactly pattern="/" component={Landing} />
+        <Match exactly pattern="/registration" component={Registration} />
         <Match exactly pattern="/game" component={Game} />
         <Miss component={NotFound} />
       </div>

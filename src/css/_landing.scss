@@ -1,0 +1,35 @@
+main {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: $solid-background;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+
+  h1 {
+    font-family: $landing-title;
+    font-size: $landing-title-size;
+    line-height: 6rem;
+    padding-bottom: $landing-padding-bottom;
+    animation: slide-down 1s ease;
+
+    @media(max-width: $xs-max-width) {
+      font-size: $mobile-landing-title-size;
+      line-height: 4rem;
+    }
+  }
+
+  img {
+    display: block;
+    margin: 0 auto;
+    max-width: 150px;
+    padding-bottom: $landing-padding-bottom;
+  }
+
+  #registration-button {
+    @include button-style;
+  }
+}
