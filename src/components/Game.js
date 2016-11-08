@@ -25,6 +25,12 @@ class Game extends React.Component {
           <button id="feed" className='no-visible'>Feed {this.state.player.llamaName}</button>
 
           <Link to='/' id="exit-button">EXIT</Link>
+
+          <div id="instructions">
+            <p>Use &gt; to speed up</p>
+            <p>Use &lt; to slow down</p>
+            <p>Use space/click to jump</p>
+          </div>
         </section>
 
         <section id="user-pic">

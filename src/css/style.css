@@ -216,6 +216,9 @@ form {
     padding-top: 35px;
     padding-bottom: 0px;
     line-height: 5rem; }
+  @media (max-width: 560px) {
+    #user-info-and-controls #instructions {
+      display: none; } }
   #user-info-and-controls p {
     color: #fff;
     width: 45vw; }

@@ -16,6 +16,12 @@
     line-height: 5rem;
   }
 
+  #instructions {
+    @media(max-width: $xs-max-width) {
+      display: none;
+    }
+  }
+
   p {
     color: #fff;
     width: 45vw;
