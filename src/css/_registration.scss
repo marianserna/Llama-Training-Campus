@@ -39,6 +39,9 @@ form {
     &:focus {
       outline: none;
     }
+    &:invalid {
+      box-shadow: none;
+    }
   }
 }
 

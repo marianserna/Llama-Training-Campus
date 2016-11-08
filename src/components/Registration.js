@@ -16,8 +16,8 @@ class Registration extends React.Component {
   }
 
   render() {
+    // Depending what step the user is on, the corresponding HTMl is shown
     let stepHtml = '';
-    // Look at what step I am on and set the HTML to match it
     if (this.state.step === 'name') {
       stepHtml = this.nameHtml();
     } else if (this.state.step === 'geolocation') {
@@ -33,21 +33,21 @@ class Registration extends React.Component {
     )
   }
 
-  // Event: Set state to the value of the input
+  // Event: Set state to the value of the input. This happens when user submits the form
   submitName(e) {
     e.preventDefault();
     // Setting component state
     this.setState({
       // Set the step I want to go next
       step: 'geolocation',
-      // Setting the property name to be eq to the value of the input
+      // Setting the property name to be eq to the value of the input. Stores this info in the state
       name: this.nameInput.value,
       llamaName: this.llamaNameInput.value
     });
     this.initGeo();
   }
 
-  // Gets user current position
+  // Gets user current position. When getCurrentPosition is successful, call geoSuccess, otherwise, call geoError
   initGeo() {
     window.navigator.geolocation.getCurrentPosition(
       // Function to call when success
@@ -111,12 +111,13 @@ class Registration extends React.Component {
     // Stop video
     this.stream.getVideoTracks()[0].stop();
 
-    const player = {
+    let player = {
       name: this.state.name,
       llamaName: this.state.llamaName,
       location: this.state.location,
       image: canvas.toDataURL('image/png')
     };
+
     this.savePlayer(player);
     this.context.router.transitionTo('/game');
   }
@@ -171,6 +172,7 @@ class Registration extends React.Component {
   }
 }
 
+// Allows transition between components
 Registration.contextTypes = {
   router: React.PropTypes.object
 }

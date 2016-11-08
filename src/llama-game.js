@@ -1,7 +1,9 @@
 import THREE from './three';
 import { TweenMax } from 'gsap';
 
-export function startGame(container) {
+export function initializeGame() {
+
+  let container = document.getElementById('three-container');
 
   let scene,
     camera,
@@ -175,11 +177,13 @@ export function startGame(container) {
   }
 
   Sky.prototype.move = function() {
+    // delta is the amount of time since the last loop
     this.cycle += delta;
-    // The cycle counts between 0 and 2*PI. % makes sure it never goes over that number. Goes back to 0.
+    // The cycle is a number between 0 and 2PI. % makes sure it never goes over that number. Goes back to 0.
     this.cycle = this.cycle % (Math.PI * 2);
-    
-    this.mesh.position.x = Math.sin(this.cycle) * 8;
+    // Update x position. Math.sin returns number between -1 & 1
+    //Multiply by 12 to accentuate the movement
+    this.mesh.position.x = Math.sin(this.cycle) * 12;
   }
 
   // Creating instance of the sky and adding it to the scene
@@ -188,12 +192,12 @@ export function startGame(container) {
     scene.add(sky.mesh);
   }
 
-
+  // Create llama body parts
   function Llama() {
     this.mesh = new THREE.Group();
     this.body = new THREE.Group();
 
-    this.runningCycle = 0;
+    this.cycle = 0;
     this.calories = 2000;
     this.state = 'running';
 
@@ -297,25 +301,28 @@ export function startGame(container) {
   Llama.prototype.run = function() {
     this.calories -= 0.2;
 
-    this.runningCycle += delta * speed;
-    this.runningCycle = this.runningCycle % (Math.PI*2);
-    var t = this.runningCycle;
-    // t = some number between 0 and 6.28 (PI * 2)
+    this.cycle += delta * speed;
+    this.cycle = this.cycle % (Math.PI*2);
 
-    this.legFrontRight.rotation.z = (Math.sin(t + .4) * Math.PI/12) - 3.2;
-    this.legFrontRight.position.y = - 2 - Math.sin(t);
+    // Making legs movement more realistic: update position & rotation
+    // Each leg moves a bit different from the other ones
+    // Lower rotation so that movement doesn't appear crazy
+    // since the z axis is changing, -3.2 makes sure the cone is pointing downwards
+    // The Y position gives some dimension to the legs compared to the body as it moves: body moves up and down while legs are moving as well.
+    this.legFrontRight.rotation.z = (Math.sin(this.cycle + .4) * Math.PI/12) - 3.2;
+    this.legFrontRight.position.y = - 2 - Math.sin(this.cycle);
 
-    this.legFrontLeft.rotation.z = (Math.sin(t) * Math.PI/12) - 3.2;
-    this.legFrontLeft.position.y = - 2 - Math.sin(t);
+    this.legFrontLeft.rotation.z = (Math.sin(this.cycle) * Math.PI/12) - 3.2;
+    this.legFrontLeft.position.y = - 2 - Math.sin(this.cycle);
 
-    this.legBackRight.rotation.z = (Math.sin(t + 1.4) * Math.PI/12) - 3.2;
-    this.legBackRight.position.y = - 2 - Math.sin(t);
+    this.legBackRight.rotation.z = (Math.sin(this.cycle + 1.4) * Math.PI/12) - 3.2;
+    this.legBackRight.position.y = - 2 - Math.sin(this.cycle);
 
-    this.legBackLeft.rotation.z = (Math.sin(t + 1) * Math.PI/12) - 3.2;
-    this.legBackLeft.position.y = - 2 - Math.sin(t);
+    this.legBackLeft.rotation.z = (Math.sin(this.cycle + 1) * Math.PI/12) - 3.2;
+    this.legBackLeft.position.y = - 2 - Math.sin(this.cycle);
 
-    this.tail.rotation.z = (Math.sin(t + .4) * Math.PI/12) - 3.2;
-    this.body.position.y = -Math.sin(t);
+    this.tail.rotation.z = (Math.sin(this.cycle + .4) * Math.PI/12) - 3.2;
+    this.body.position.y = - Math.sin(this.cycle);
   }
 
   Llama.prototype.jump = function() {
@@ -323,7 +330,7 @@ export function startGame(container) {
       return;
     }
     this.state = 'jumping';
-    // Animating Llama's mesh.
+    // Animating Llama's mesh: Llama eats apple when you make it jump. For this to happen, I need to make sure that there is an apple in the scene
     TweenMax.to(this.mesh.position, 1, {y: 30, ease:TweenMax.Power2.easeOut,
       onComplete: function() {
         if (apple.canEat()) {
@@ -350,6 +357,7 @@ export function startGame(container) {
     scene.add(llama.mesh);
   }
 
+  // Creating apple
   function Apple() {
     this.mesh = new THREE.Group();
 
@@ -385,6 +393,7 @@ export function startGame(container) {
     scene.add(apple.mesh);
   };
 
+  // Creating planet
   function createPlanet() {
     var planetGeometry = new THREE.SphereGeometry(70, 120, 120);
     planet = new THREE.Mesh(planetGeometry, planetColor);
@@ -406,6 +415,7 @@ export function startGame(container) {
     }
 
     render();
+    // Browser: every time you're going to animate, run the loop.
     requestAnimationFrame(loop);
   }
 

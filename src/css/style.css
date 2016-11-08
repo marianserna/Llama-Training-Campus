@@ -2,7 +2,6 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-@import url("https://fonts.googleapis.com/css?family=Rubik:400,500");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -103,6 +102,7 @@ main {
     display: inline-block;
     margin: 15px auto;
     min-width: 180px;
+    max-width: 300px;
     padding: 10px 20px;
     font-size: 3rem;
     color: #00BCD4;
@@ -145,6 +145,7 @@ form {
       display: inline-block;
       margin: 15px auto;
       min-width: 180px;
+      max-width: 300px;
       padding: 10px 20px;
       font-size: 3rem;
       color: #00BCD4;
@@ -166,6 +167,8 @@ form {
     border-bottom: 2px solid #FF5722; }
     form [placeholder*="User Name"]:focus, form [placeholder*="Name your Llama"]:focus {
       outline: none; }
+    form [placeholder*="User Name"]:invalid, form [placeholder*="Name your Llama"]:invalid {
+      box-shadow: none; }
 
 #geolocation, #your-video {
   display: flex;
@@ -187,6 +190,7 @@ form {
   display: inline-block;
   margin: 15px auto;
   min-width: 180px;
+  max-width: 300px;
   padding: 10px 20px;
   font-size: 3rem;
   color: #00BCD4;
@@ -223,6 +227,7 @@ form {
     display: inline-block;
     margin: 15px auto;
     min-width: 180px;
+    max-width: 300px;
     padding: 10px 20px;
     font-size: 3rem;
     color: #00BCD4;

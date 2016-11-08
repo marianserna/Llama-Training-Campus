@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { startGame } from '../llama';
+import { initializeGame } from '../llama-game';
 
 class Game extends React.Component {
   constructor() {
@@ -36,14 +36,14 @@ class Game extends React.Component {
           <p>Calories: <span id="calories">2000</span></p>
         </section>
 
-        <div id="three-container" ref={(element) => {this.threeContainer = element}}></div>
+        <div id="three-container"></div>
       </div>
     )
   }
 
-  // After render call: after the game component is initialized, it calls start game. startGame is a function imported from the llama.js file
+  // After render call: after the game component is initialized, it calls initialize game. This function is imported from the llama.js file
   componentDidMount() {
-    startGame(this.threeContainer);
+    initializeGame();
   }
 
   randomCheerUp() {
