@@ -8,13 +8,13 @@ main {
   justify-content: center;
   flex-direction: column;
   text-align: center;
+  animation: slide-down 4s ease;
 
   h1 {
     font-family: $landing-title;
     font-size: $landing-title-size;
     line-height: 6rem;
     padding-bottom: $landing-padding-bottom;
-    animation: slide-down 1s ease;
 
     @media(max-width: $xs-max-width) {
       font-size: $mobile-landing-title-size;
@@ -26,10 +26,22 @@ main {
     display: block;
     margin: 0 auto;
     max-width: 150px;
+    height: 250px;
     padding-bottom: $landing-padding-bottom;
   }
 
   #registration-button {
     @include button-style;
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
   }
 }

@@ -10,6 +10,7 @@ class Landing extends React.Component {
           <br/>
           Llama Training Campus
         </h1>
+
         <img src="llama_stroke.png" alt="llama image"/>
         <Link to='/registration' id="registration-button">Register</Link>
       </main>

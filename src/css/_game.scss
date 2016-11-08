@@ -1,5 +1,6 @@
-.no-visible {
-  display: none;
+#game-container {
+  // background: linear-gradient(#E6DADA, #274046);
+  background: #000;
 }
 
 #user-info-and-controls {
@@ -9,17 +10,45 @@
   left: 20px;
   font-size: $big-font-size;
 
-  h3, p, button {
-    padding: 15px 0;
+  h2 {
+    padding-top: 35px;
+    padding-bottom: 0px;
+    line-height: 5rem;
   }
 
-   h3 {
-     font-size: $name-font-size;
-   }
+  p {
+    color: #fff;
+    width: 45vw;
+    @media(max-width: $xs-max-width) {
+      width: 70vw;
+      font-size: 16px;
+    }
+  }
 
-  button {
-    padding-left: 10px;
-    padding-right: 10px;
+  button, #exit-button {
+    @include button-style;
+    font-size: $regular-font-size;
+
+    @media(max-width: $xs-max-width) {
+      min-width: 120px;
+      padding-left: 5px;
+      padding-right: 5px;
+      font-size: 12px;
+    }
+  }
+
+  #exit-button {
+    color: #f44336;
+    font-size: 2rem;
+    font-weight: bold;
+
+    &:hover {
+      background: #E1BEE7;
+    }
+  }
+
+  .no-visible {
+    display: none;
   }
 }
 
@@ -37,7 +66,20 @@
 
 #llama-info {
   position: absolute;
-  bottom: 20px;
+  bottom: 10px;
   right: 20px;
   font-size: $big-font-size;
+}
+
+#cheer {
+  position: absolute;
+  bottom: 50px;
+  text-align: center;
+  color: $cheer-color;
+  font-size: $cheer-font-size;
+  font-weight: bold;
+
+  @media(max-width: $xs-max-width) {
+    font-size: 24px;
+  }
 }

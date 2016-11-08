@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { startGame } from '../llama';
 
 class Game extends React.Component {
@@ -7,33 +8,40 @@ class Game extends React.Component {
 
     this.state = {
       player: JSON.parse(localStorage.player),
-
+      cheermsg: false
     }
   }
 
   render() {
     return(
-      <div>
+      <div id="game-container">
+        {this.displayCheer()}
         <section id="user-info-and-controls">
-          <h3>{this.state.player.name}</h3>
+          <h2>{this.state.player.name}</h2>
           <p>{this.state.player.location.split(',')[0]}</p>
           <button id="start-game">Start Work Out</button>
           <button id="stop-game" className='no-visible'>Take a Break</button>
           <button id="cheer-up" className='no-visible' onClick={this.showCheer.bind(this)}>Cheer {this.state.player.llamaName} Up!</button>
           <button id="feed" className='no-visible'>Feed {this.state.player.llamaName}</button>
+
+          <Link to='/' id="exit-button">EXIT</Link>
         </section>
+
         <section id="user-pic">
           <img src={this.state.player.image} alt="user image"/>
         </section>
+
         <section id="llama-info">
           <h3>{this.state.player.llamaName}</h3>
           <p>Calories: <span id="calories">2000</span></p>
         </section>
+
         <div id="three-container" ref={(element) => {this.threeContainer = element}}></div>
       </div>
     )
   }
 
+  // After render call: after the game component is initialized, it calls start game. startGame is a function imported from the llama.js file
   componentDidMount() {
     startGame(this.threeContainer);
   }
@@ -49,9 +57,24 @@ class Game extends React.Component {
     return cheers[i];
   }
 
+  displayCheer() {
+    if (this.state.cheermsg) {
+      return(
+        <p id="cheer">{this.randomCheerUp()}</p>
+      )
+    }
+  }
+
   showCheer(e) {
     e.preventDefault();
-    alert(this.randomCheerUp());
+    this.setState({
+      cheermsg: true
+    });
+    setTimeout(function() {
+      this.setState({
+        cheermsg: false
+      });
+    }.bind(this), 4000);
   }
 }
 

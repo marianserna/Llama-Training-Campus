@@ -16,30 +16,31 @@ export function startGame(container) {
   let speed = 5;
   const MAXSPEED = 60;
   const MINSPEED = 5;
-  let distance = 0;
   let gameState = 'stopped';
   let sky,
     llama,
     apple,
     planet;
 
+  // Music to be played during work out
   let music = new Audio('Marvin_s_Dance.mp3');
   music.volume = 0.5;
 
   let chompApple = new Audio('bite.wav');
 
+  let llamaCalories = document.getElementById('calories');
   let feedButton = document.getElementById('feed');
   let startGame = document.getElementById('start-game');
   let stopGame = document.getElementById('stop-game');
   let cheerUp = document.getElementById('cheer-up');
 
-  window.addEventListener('resize', resize, false);
-
+  // Shows apple when feed button is clicked
   feedButton.addEventListener('click', function(e) {
     e.stopPropagation();
     apple.show();
   }, false);
 
+  // Toggle class to show/remove buttons depending on the state of the game (start game adds buttons)
   startGame.addEventListener('click', function(e) {
     e.stopPropagation();
     stopGame.classList.remove('no-visible');
@@ -50,6 +51,7 @@ export function startGame(container) {
     music.play();
   });
 
+  // Toggle class to show/remove buttons depending on the state of the game (stop game removes buttons)
   stopGame.addEventListener('click', function(e) {
     e.stopPropagation();
     stopGame.classList.add('no-visible');
@@ -68,8 +70,9 @@ export function startGame(container) {
     camera.updateProjectionMatrix();
   }
 
-  let llamaCalories = document.getElementById('calories');
+  window.addEventListener('resize', resize, false);
 
+  // Set colors ('materials')
   let whiteMatte = new THREE.MeshPhongMaterial({
     color: 0xffffff,
     shading: THREE.FlatShading
@@ -110,6 +113,7 @@ export function startGame(container) {
     shading: THREE.FlatShading
   });
 
+  // initialize function: setting up basic scene, camera, and renderer
   function init() {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(50, width / height, 1, 2000);
@@ -124,21 +128,27 @@ export function startGame(container) {
     renderer.shadowMap.enabled = true;
     container.appendChild(renderer.domElement);
 
+    // Turn camera around
     var controls = new THREE.OrbitControls(camera);
     controls.addEventListener('change', render);
 
+    // on click trigger llama's jump function
     container.addEventListener('click', triggerJump, false);
     document.addEventListener('keydown', function(event) {
+      //space bar triggers jump
       if (event.keyCode === 32) {
         triggerJump();
+      // greater than increases speed
       } else if (event.keyCode === 190) {
         speed = Math.min(speed + 5, MAXSPEED);
+        // less than decreases speed
       } else if (event.keyCode === 188) {
         speed = Math.max(speed - 5, MINSPEED);
       }
     }, false);
   }
 
+  // Incorporating lights to scene
   function lights() {
     var ambient = new THREE.AmbientLight(0x404040);
     scene.add(ambient);
@@ -149,6 +159,7 @@ export function startGame(container) {
     scene.add(directional);
   }
 
+  // Creating group of clouds
   function Sky() {
     this.mesh = new THREE.Group();
     this.cycle = 0;
@@ -163,18 +174,20 @@ export function startGame(container) {
     }
   }
 
+  Sky.prototype.move = function() {
+    this.cycle += delta;
+    // The cycle counts between 0 and 2*PI. % makes sure it never goes over that number. Goes back to 0.
+    this.cycle = this.cycle % (Math.PI * 2);
+    
+    this.mesh.position.x = Math.sin(this.cycle) * 8;
+  }
+
+  // Creating instance of the sky and adding it to the scene
   function createSky() {
     sky = new Sky();
     scene.add(sky.mesh);
   }
 
-  Sky.prototype.move = function() {
-    this.cycle += delta;
-    // The cycle counts between 0 and 2*PI. % makes sure it never goes over that number. Goes back to 0.
-    this.cycle = this.cycle % (Math.PI * 2);
-
-    this.mesh.position.x = Math.sin(this.cycle) * 8;
-  }
 
   function Llama() {
     this.mesh = new THREE.Group();
@@ -385,7 +398,6 @@ export function startGame(container) {
 
     if (gameState === 'playing') {
       planet.rotation.z += (speed * .002);
-      distance += speed * 2;
       sky.move();
       if(llama.state === 'running') {
         llama.run();
@@ -413,8 +425,3 @@ export function startGame(container) {
   createPlanet();
   loop();
 }
-
-
-//build clouds
-//add music
-//style form stuff

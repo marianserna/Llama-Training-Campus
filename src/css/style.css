@@ -58,7 +58,20 @@ body {
   width: 100vw;
   height: 100vh;
   font-family: "Didact Gothic", sans-serif;
-  color: #37474F; }
+  color: #FF5722; }
+
+h2 {
+  font-family: "Didact Gothic", sans-serif;
+  font-size: 5rem;
+  color: #FF5722;
+  width: 100%;
+  padding-bottom: 35px; }
+
+p {
+  width: 100%;
+  font-size: 2.25rem;
+  color: #00BCD4;
+  padding-bottom: 35px; }
 
 main {
   margin: 0;
@@ -69,13 +82,13 @@ main {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  text-align: center; }
+  text-align: center;
+  animation: slide-down 4s ease; }
   main h1 {
     font-family: "Abril Fatface", cursive;
     font-size: 5rem;
     line-height: 6rem;
-    padding-bottom: 50px;
-    animation: slide-down 1s ease; }
+    padding-bottom: 50px; }
     @media (max-width: 560px) {
       main h1 {
         font-size: 3rem;
@@ -84,10 +97,11 @@ main {
     display: block;
     margin: 0 auto;
     max-width: 150px;
+    height: 250px;
     padding-bottom: 50px; }
   main #registration-button {
-    display: block;
-    margin: 0 auto;
+    display: inline-block;
+    margin: 15px auto;
     min-width: 180px;
     padding: 10px 20px;
     font-size: 3rem;
@@ -95,10 +109,19 @@ main {
     background: #fff;
     border: 2px solid #383838;
     border-radius: 50px;
-    text-decoration: none; }
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer; }
     main #registration-button:hover {
       background: #AB47BC; }
 
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px); }
+  100% {
+    opacity: 1;
+    transform: translateY(0px); } }
 form {
   width: 40vw;
   height: 100vh;
@@ -115,11 +138,12 @@ form {
     padding-bottom: 50px;
     text-align: center;
     padding: 10px;
-    border-bottom: 2px solid #FF5722;
-    margin-bottom: 30px; }
+    margin-bottom: 50px; }
+    form .input-field.no-border {
+      border: none; }
     form .input-field button {
-      display: block;
-      margin: 0 auto;
+      display: inline-block;
+      margin: 15px auto;
       min-width: 180px;
       padding: 10px 20px;
       font-size: 3rem;
@@ -127,18 +151,56 @@ form {
       background: #fff;
       border: 2px solid #383838;
       border-radius: 50px;
-      text-decoration: none; }
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer; }
       form .input-field button:hover {
         background: #AB47BC; }
   form [placeholder*="User Name"], form [placeholder*="Name your Llama"] {
     font-family: "Didact Gothic", sans-serif;
     font-size: 3rem;
     color: #00BCD4;
+    width: 100%;
     display: block;
-    border: none; }
+    border: none;
+    border-bottom: 2px solid #FF5722; }
+    form [placeholder*="User Name"]:focus, form [placeholder*="Name your Llama"]:focus {
+      outline: none; }
 
-.no-visible {
-  display: none; }
+#geolocation, #your-video {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  height: 100vh; }
+  #geolocation #geo-container, #geolocation #video-container, #your-video #geo-container, #your-video #video-container {
+    width: 70%;
+    padding-bottom: 50px;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 50px; }
+
+#your-video video {
+  width: 45%; }
+#your-video button {
+  display: inline-block;
+  margin: 15px auto;
+  min-width: 180px;
+  padding: 10px 20px;
+  font-size: 3rem;
+  color: #00BCD4;
+  background: #fff;
+  border: 2px solid #383838;
+  border-radius: 50px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer; }
+  #your-video button:hover {
+    background: #AB47BC; }
+
+#game-container {
+  background: #000; }
 
 #user-info-and-controls {
   position: absolute;
@@ -146,13 +208,47 @@ form {
   height: 100vh;
   left: 20px;
   font-size: 2rem; }
-  #user-info-and-controls h3, #user-info-and-controls p, #user-info-and-controls button {
-    padding: 15px 0; }
-  #user-info-and-controls h3 {
-    font-size: 3rem; }
-  #user-info-and-controls button {
-    padding-left: 10px;
-    padding-right: 10px; }
+  #user-info-and-controls h2 {
+    padding-top: 35px;
+    padding-bottom: 0px;
+    line-height: 5rem; }
+  #user-info-and-controls p {
+    color: #fff;
+    width: 45vw; }
+    @media (max-width: 560px) {
+      #user-info-and-controls p {
+        width: 70vw;
+        font-size: 16px; } }
+  #user-info-and-controls button, #user-info-and-controls #exit-button {
+    display: inline-block;
+    margin: 15px auto;
+    min-width: 180px;
+    padding: 10px 20px;
+    font-size: 3rem;
+    color: #00BCD4;
+    background: #fff;
+    border: 2px solid #383838;
+    border-radius: 50px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 1.5rem; }
+    #user-info-and-controls button:hover, #user-info-and-controls #exit-button:hover {
+      background: #AB47BC; }
+    @media (max-width: 560px) {
+      #user-info-and-controls button, #user-info-and-controls #exit-button {
+        min-width: 120px;
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 12px; } }
+  #user-info-and-controls #exit-button {
+    color: #f44336;
+    font-size: 2rem;
+    font-weight: bold; }
+    #user-info-and-controls #exit-button:hover {
+      background: #E1BEE7; }
+  #user-info-and-controls .no-visible {
+    display: none; }
 
 #user-pic {
   position: absolute;
@@ -165,8 +261,19 @@ form {
 
 #llama-info {
   position: absolute;
-  bottom: 20px;
+  bottom: 10px;
   right: 20px;
   font-size: 2rem; }
+
+#cheer {
+  position: absolute;
+  bottom: 50px;
+  text-align: center;
+  color: #FFEB3B;
+  font-size: 3.5rem;
+  font-weight: bold; }
+  @media (max-width: 560px) {
+    #cheer {
+      font-size: 24px; } }
 
 /*# sourceMappingURL=style.css.map */

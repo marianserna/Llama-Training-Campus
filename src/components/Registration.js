@@ -44,11 +44,11 @@ class Registration extends React.Component {
       name: this.nameInput.value,
       llamaName: this.llamaNameInput.value
     });
-    this.initiGeo();
+    this.initGeo();
   }
 
   // Gets user current position
-  initiGeo() {
+  initGeo() {
     window.navigator.geolocation.getCurrentPosition(
       // Function to call when success
       this.geoSuccess.bind(this),
@@ -131,12 +131,12 @@ class Registration extends React.Component {
       <form onSubmit={this.submitName.bind(this)}>
         <div className="input-field">
           { /* When form gets submitted, I want the value of the input : need to set a ref -> lets me access input element */ }
-          <input type="text" ref={ (input) => {this.nameInput = input} } className="border" placeholder="User Name"/>
+          <input type="text" ref={ (input) => {this.nameInput = input} } className="border" placeholder="User Name" required />
         </div>
         <div className="input-field">
-          <input type="text" ref={ (input) => {this.llamaNameInput = input} } className="border" placeholder="Name your Llama" />
+          <input type="text" ref={ (input) => {this.llamaNameInput = input} } className="border" placeholder="Name your Llama" required />
         </div>
-        <div className="input-field">
+        <div className="input-field no-border">
           <button>Let's do This!</button>
         </div>
       </form>
@@ -146,8 +146,10 @@ class Registration extends React.Component {
   geolocationHtml() {
     return(
       <div id="geolocation">
-        <h2>{this.state.name}</h2>
-        <p>Detecting location....</p>
+        <div id="geo-container">
+          <h2>{this.state.name}</h2>
+          <p>Detecting location....</p>
+        </div>
       </div>
     )
   }
@@ -155,12 +157,15 @@ class Registration extends React.Component {
   mediaHtml() {
     return(
       <div id="your-video">
-        <p>{this.state.name}</p>
-        <p>{this.state.location}</p>
-        { /* makes ref to video element so that I can access it later on */ }
-        <video ref={(input) => {this.videoElement = input}}></video>
-        { /* Setting context for when function gets called */ }
-        <button onClick={this.takePicture.bind(this)}>Take Pic</button>
+        <div id="video-container">
+          <h2>{this.state.name}</h2>
+          <p>{this.state.location}</p>
+          { /* makes ref to video element so that I can access it later on */ }
+          <video ref={(input) => {this.videoElement = input}}></video>
+          { /* Setting context for when function gets called */ }
+          <br/>
+          <button onClick={this.takePicture.bind(this)}>Take Pic</button>
+        </div>
       </div>
     )
   }

@@ -16,8 +16,11 @@ form {
     padding-bottom: $landing-padding-bottom;
     text-align: center;
     padding: 10px;
-    border-bottom: 2px solid $input-border-color;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
+
+    &.no-border {
+      border: none;
+    }
 
     button {
       @include button-style;
@@ -28,16 +31,40 @@ form {
     font-family: $font-family-regular;
     font-size: $regular-font-size * 2;
     color: $button-font-color;
+    width: 100%;
     display: block;
     border: none;
+    border-bottom: 2px solid $input-border-color;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+#geolocation, #your-video {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  height: 100vh;
+
+  #geo-container, #video-container {
+    width: 70%;
+    padding-bottom: $landing-padding-bottom;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 50px;
+  }
+}
+
+#your-video {
+  video {
+    width: 45%;
   }
 
-
-  #geolocation {
-
-  }
-
-  #your-video {
-
+  button {
+    @include button-style;
   }
 }
